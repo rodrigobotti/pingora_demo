@@ -1,0 +1,56 @@
+version: '3'
+
+services:
+
+  proxy:
+    build: 
+      context: ./
+      dockerfile: proxy.Dockerfile
+    expose:
+      - "8000"
+    ports:
+      - "8000:8000"
+    environment:
+      - SERVER_LIST=server_1:8001,server_2:8002,server_3:8003
+      - PORT=8000
+    networks:
+      - pingora_demo
+
+  server_1:
+    build:
+      context: ./
+      dockerfile: server.Dockerfile
+    expose:
+      - "8001"
+    environment:
+      - PORT=8001
+      - SERVER_NAME=server_1
+    networks:
+      - pingora_demo
+
+  server_2:
+    build:
+      context: ./
+      dockerfile: server.Dockerfile
+    expose:
+      - "8002"
+    environment:
+      - PORT=8002
+      - SERVER_NAME=server_2
+    networks:
+      - pingora_demo
+  
+  server_3:
+    build:
+      context: ./
+      dockerfile: server.Dockerfile
+    expose:
+      - "8003"
+    environment:
+      - PORT=8003
+      - SERVER_NAME=server_3
+    networks:
+      - pingora_demo
+
+networks:
+  pingora_demo:

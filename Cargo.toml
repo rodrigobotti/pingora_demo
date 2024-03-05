@@ -1,0 +1,19 @@
+[package]
+name = "pingora_demo"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+async-trait = "0.1.77"
+axum = "0.7.4"
+pingora = { version = "0.1.0", features = ["lb"] }
+tokio = { version = "1.36.0", features = ["full"] }
+
+
+[[bin]]
+name = "proxy"
+path = "src/proxy.rs"
+
+[[bin]]
+name = "server"
+path = "src/server.rs"
