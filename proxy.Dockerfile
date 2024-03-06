@@ -7,6 +7,8 @@ WORKDIR /proxy
 # install cmake
 RUN apt update && apt install -y cmake
 
+COPY ./proxy.conf.yml ./proxy.conf.yml
+
 # copy over your manifests
 COPY ./Cargo.lock ./Cargo.lock
 COPY ./Cargo.toml ./Cargo.toml
@@ -24,5 +26,7 @@ FROM rust:1.76.0
 # copy the build artifact from the build stage
 COPY --from=build /proxy/target/release/proxy .
 
+COPY --from=build /proxy/proxy.conf.yml .
+
 # set the startup command to run your binary
-CMD ["./proxy"]
+CMD ["./proxy", "-c", "proxy.conf.yml"]
